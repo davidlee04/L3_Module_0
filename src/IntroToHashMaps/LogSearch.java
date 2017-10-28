@@ -1,6 +1,15 @@
 package IntroToHashMaps;
 
-public class LogSearch {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class LogSearch implements ActionListener {
   /* 
 	 * Crate a HashMap of Integers for the keys and Strings for the values.
 	 * Create a GUI with three buttons. 
@@ -28,4 +37,82 @@ public class LogSearch {
 	 * 				is not in the list. 
 	 *
 	 * */
+	JFrame frame;
+	JPanel panel;
+	JButton addEntry;
+	JButton searchID;
+	JButton viewList;
+	JButton removeEntry;
+	
+	HashMap<Integer, String> id;
+	public static void main(String[] args) {
+		LogSearch run = new LogSearch();
+		run.setUI();
+	}
+	
+	public LogSearch() {
+		frame = new JFrame();
+		panel = new JPanel();
+		addEntry = new JButton();
+		searchID = new JButton();
+		viewList = new JButton();
+		removeEntry = new JButton();
+		id = new HashMap<Integer, String>();
+	}
+	
+	void setUI() {
+		frame.add(panel);
+		panel.add(addEntry);
+		panel.add(searchID);
+		panel.add(viewList);
+		panel.add(removeEntry);
+		frame.setVisible(true);
+		addEntry.setText("Add Entry");
+		searchID.setText("Search By ID");
+		viewList.setText("View List");
+		removeEntry.setText("Remove Entry");
+		addEntry.addActionListener(this);
+		searchID.addActionListener(this);
+		viewList.addActionListener(this);
+		removeEntry.addActionListener(this);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == addEntry) {
+			String input = JOptionPane.showInputDialog("Please enter a new ID number.");
+			String inputName = JOptionPane.showInputDialog("Please enter your name.");
+			int inputInt = Integer.parseInt(input);
+			id.put(inputInt, inputName);
+		}
+		if(e.getSource() == searchID) {
+			String desiredID = JOptionPane.showInputDialog("Please enter your ID number.");
+			int intID = Integer.parseInt(desiredID);
+			if(id.containsKey(intID)) {
+				JOptionPane.showMessageDialog(null, id.get(intID));
+			}else {
+				JOptionPane.showMessageDialog(null, "That ID does not exist.");
+			}
+		}
+		if(e.getSource() == viewList) {
+			String list = "";
+			for(Integer s : id.keySet()) {
+				list += "ID: "+s+" Name: "+id.get(s)+"\n";
+			}
+			JOptionPane.showMessageDialog(null, list);
+		}
+		if(e.getSource() == removeEntry) {
+			String removedID = JOptionPane.showInputDialog("Please enter an ID.");
+			int intRemovedID = Integer.parseInt(removedID);
+			if(id.containsKey(intRemovedID)) {
+				id.remove(intRemovedID);
+				JOptionPane.showMessageDialog(null, "Success!");
+			}else {
+				JOptionPane.showMessageDialog(null, "That ID does not exist.");
+			}
+		}
+	}
 }
