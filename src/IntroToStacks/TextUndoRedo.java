@@ -55,11 +55,22 @@ public class TextUndoRedo implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		input = input += e.getKeyChar();
-		label.setText(input);
+		if (!(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) && !(e.getKeyChar() == KeyEvent.VK_BACK_SLASH)) {
+			input = input += e.getKeyChar();
+		    label.setText(input);
+		}
 
-		if (e.getKeyChar() == KeyEvent.VK_DELETE) {
+		if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
 			text.push(input.charAt(input.length() - 1) + "");
+			input = input.substring(0, input.length()-1);
+			label.setText(input);
+		}
+		
+		if(e.getKeyChar() == KeyEvent.VK_BACK_SLASH) {
+			System.out.println("test");
+			String undo = text.pop();
+			input = input+undo;
+			label.setText(input);
 		}
 
 	}
