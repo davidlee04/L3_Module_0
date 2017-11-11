@@ -67,7 +67,6 @@ public class TextUndoRedo implements KeyListener {
 		}
 		
 		if(e.getKeyChar() == KeyEvent.VK_BACK_SLASH) {
-			System.out.println("test");
 			String undo = text.pop();
 			input = input+undo;
 			label.setText(input);
